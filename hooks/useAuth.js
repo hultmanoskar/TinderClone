@@ -13,7 +13,7 @@ const signInWithGoogle = async() => {
   return (
     <AuthContext.Provider 
     value={{ 
-user: null
+user: "Ogge"
 
     }}>
       {children}

@@ -1,10 +1,9 @@
 import { StyleSheet, Text, View, Button, ImageBackground, TouchableOpacity } from 'react-native'
 import React, { useLayoutEffect } from 'react'
-import useAuth from '../hooks/useAuth'
 import { useNavigation } from '@react-navigation/native'
 
 
-const LoginScreen = () => {
+const SignupScreen = () => {
 
   const navigation = useNavigation();
 
@@ -18,19 +17,15 @@ useLayoutEffect(() => {
     <View style={styles.topView}>
      <ImageBackground style={styles.imgBackground}
       source={{uri: "https://tinder.com/static/tinder.png"}}>
-        <TouchableOpacity style={styles.touchableText}
-        onPress={() => {
-          navigation.navigate("Home")
-        }}
-        >
-    <Text>Sign in & start swiping</Text>
+        <TouchableOpacity style={styles.touchableText}>
+    <Text>Sign up & get matches today</Text>
     </TouchableOpacity>
      </ImageBackground>
     </View>
   )
 }
 
-export default LoginScreen
+export default SignupScreen
 
 const styles = StyleSheet.create({
 topView:{

@@ -23,7 +23,7 @@ useLayoutEffect(() => {
           navigation.navigate("Home")
         }}
         >
-    <Text>Sign in & start swiping</Text>
+    <Text>Login & start swiping</Text>
     </TouchableOpacity>
      </ImageBackground>
     </View>

@@ -1,5 +1,5 @@
 import { Button, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { AntDesign, Entypo, Ionicons, FontAwesome} from '@expo/vector-icons'
 import Swiper from 'react-native-deck-swiper'
@@ -9,7 +9,7 @@ const RANDOM_DATA = [
     firstName: "Ogge",
     lastName: "Hult",
     job: "Mobile dev",
-    age: 24,
+    age: 28,
     city: "Stockholm",
     profilePic: "https://www.sportsnet.ca/wp-content/uploads/2014/11/thierry_henry720.jpg",
     id:123
@@ -28,6 +28,7 @@ const RANDOM_DATA = [
 
 const HomeScreen = () => {
 const navigation = useNavigation();
+const swipeRef = useRef(null);
 
 
 
@@ -39,7 +40,7 @@ const navigation = useNavigation();
 <TouchableOpacity>
   <Image style={styles.smallImg} source={require('../assets/rihanna.jpg')}/>
 </TouchableOpacity>
-<TouchableOpacity>
+<TouchableOpacity  onPress={()=> navigation.navigate("Modal")}  >
   <Image style={styles.logoImg} source={require('../assets/tinder-logo.png')}/>
 </TouchableOpacity>
 
@@ -52,11 +53,37 @@ const navigation = useNavigation();
         {/* End of Header */}
 <View style={styles.swipeView}>
 <Swiper
+ref={swipeRef}
 containerStyle={{backgroundColor: "transparent"}}
 cards={RANDOM_DATA} 
 stackSize={5}
 cardIndex={0}
 verticalSwipe={false}
+onSwipedLeft={() => {
+  console.log("Swipe PASS")
+}}
+onSwipedRight={() => {
+  console.log("Swipe MATCH")
+}}
+overlayLabels={{
+  left: {
+    title: "Nope",
+    style: {
+      label: {
+        textAlign: "right",
+        color: "red"
+      }
+    }
+  },
+  right: {
+    title: "Yes",
+    style: {
+      label: {
+        color: "#4FFFB0"
+      }
+    }
+  }
+}}
 renderCard={(card) => (
 <View key={card.id} style={styles.cardView}>
     <Image 
@@ -76,7 +103,7 @@ renderCard={(card) => (
     </View>
 
     <View style={{flexDirection: 'row', alignItems: 'center'}}>
-    <Ionicons name='location-sharp' size={14} color={'#fafafa'} />
+    <Ionicons name='location-sharp' size={12} color={'#fafafa'} />
     <Text style={{fontSize: 14, fontWeight: '400',color: '#fafafa',marginHorizontal: 4,textShadowColor: 'black', textShadowRadius: 8}}>{card.city}</Text>
     </View>
 </View>
@@ -95,7 +122,8 @@ renderCard={(card) => (
     <FontAwesome name='undo' size={30} color={"#FEBE10"} />
   </TouchableOpacity>
 
-  <TouchableOpacity style={styles.iconContainer}>
+  <TouchableOpacity onPress={()=> swipeRef.current.swipeLeft()}
+   style={styles.iconContainer}>
     <Entypo name='cross' size={34} color={'red'} />
   </TouchableOpacity>
 
@@ -103,7 +131,8 @@ renderCard={(card) => (
     <AntDesign name='star' size={30} color={"#007FFF"} />
   </TouchableOpacity>
 
-  <TouchableOpacity style={styles.iconContainer}>
+  <TouchableOpacity onPress={()=> swipeRef.current.swipeRight()} 
+  style={styles.iconContainer}>
     <AntDesign name='heart' size={30} color={"#4FFFB0"} />
   </TouchableOpacity>
   
@@ -136,18 +165,21 @@ const styles = StyleSheet.create({
     padding: 8
   },
   swipeView: {
-     flex: 1, bottom: 30
+     flex: 1, bottom: 30,
+     
   },
   cardView: {
     backgroundColor: "white",
     flex: 5/6,
     borderRadius: 8,
     overflow: 'hidden', 
-    position: 'relative', // Add this line
+    position: 'relative',
+
   },
   cardImg: {
     flex: 1, // Take up full available space
-    width: '100%',opacity:0.9
+    width: '100%',opacity:0.9,
+    
   },
   iconContainer: {
     backgroundColor: 'white',

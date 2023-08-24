@@ -120,7 +120,7 @@ renderCard={(card) => card ? (
       // If cards is empty
 
   <View style={styles.cardView2}>
-   <Entypo name='emoji-sad' size={50} color={'red'}/>
+   <Entypo name='emoji-sad' size={40} color={'red'}/>
     <Text style={{fontSize: 14, fontWeight: '400'}}>No more profiles...</Text>
   </View>
 )}

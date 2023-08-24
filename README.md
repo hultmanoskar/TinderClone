@@ -14,4 +14,3 @@
 <img src="/assets/tinder3.png" alt="Home Screen" style="width: 300px;">
 
 
-

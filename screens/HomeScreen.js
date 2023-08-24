@@ -1,5 +1,5 @@
 import { Button, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
-import React, { useLayoutEffect, useRef } from 'react'
+import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { AntDesign, Entypo, Ionicons, FontAwesome} from '@expo/vector-icons'
 import Swiper from 'react-native-deck-swiper'
@@ -30,6 +30,11 @@ const HomeScreen = () => {
 const navigation = useNavigation();
 const swipeRef = useRef(null);
 
+useLayoutEffect(() => {
+
+
+}, [])
+
 
 
   return (
@@ -56,7 +61,7 @@ const swipeRef = useRef(null);
 ref={swipeRef}
 containerStyle={{backgroundColor: "transparent"}}
 cards={RANDOM_DATA} 
-stackSize={5}
+stackSize={4}
 cardIndex={0}
 verticalSwipe={false}
 onSwipedLeft={() => {
@@ -84,7 +89,7 @@ overlayLabels={{
     }
   }
 }}
-renderCard={(card) => (
+renderCard={(card) => card ? (
 <View key={card.id} style={styles.cardView}>
     <Image 
     style={styles.cardImg}
@@ -110,6 +115,14 @@ renderCard={(card) => (
 
 
   </View> 
+) : ( 
+
+      // If cards is empty
+
+  <View style={styles.cardView2}>
+   <Entypo name='emoji-sad' size={50} color={'red'}/>
+    <Text style={{fontSize: 14, fontWeight: '400'}}>No more profiles...</Text>
+  </View>
 )}
 />
 
@@ -174,7 +187,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: 'hidden', 
     position: 'relative',
-
+    elevation: 2,
   },
   cardImg: {
     flex: 1, // Take up full available space
@@ -197,6 +210,17 @@ const styles = StyleSheet.create({
     padding: 4, 
     borderRadius: 8, 
     zIndex: 1, 
+    shadowColor: 'black',
+    shadowRadius: 4,
+  },
+  cardView2: {
+    backgroundColor: "white",
+    flex: 5/6,
+    borderRadius: 8,
+  
+elevation: 2,
+alignItems: 'center',
+justifyContent: 'center'
   },
   
 })

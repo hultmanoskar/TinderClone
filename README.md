@@ -7,3 +7,8 @@
 - React Native 
 
 ## Screenshots
+
+### Home Screen
+<img src="/assets/tinder1.png" alt="Home Screen" style="width: 300px;">
+<img src="/assets/tinder2.png" alt="Home Screen" style="width: 300px;">
+

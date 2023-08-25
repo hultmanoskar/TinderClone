@@ -1,8 +1,10 @@
 import { Button, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
-import React, { useEffect, useLayoutEffect, useRef } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { AntDesign, Entypo, Ionicons, FontAwesome} from '@expo/vector-icons'
 import Swiper from 'react-native-deck-swiper'
+
+
 
 const RANDOM_DATA = [
   {
@@ -27,6 +29,15 @@ const RANDOM_DATA = [
 
 
 const HomeScreen = () => {
+
+const [profiles, setProfiles] = useState(RANDOM_DATA);
+
+const addProfile = (newProfile) => {
+  const updatedProfiles = [...profiles, newProfile];
+  console.log("Updated Profiles:", updatedProfiles); // Check the updated profiles
+  setProfiles(updatedProfiles);
+};
+
 const navigation = useNavigation();
 const swipeRef = useRef(null);
 
@@ -42,15 +53,17 @@ useLayoutEffect(() => {
         {/* Header */}
 
 <View style={styles.topView}>
-<TouchableOpacity>
+<TouchableOpacity onPress={()=> {
+  console.log(RANDOM_DATA);
+}}style={styles.iconContainer2} >
   <Image style={styles.smallImg} source={require('../assets/rihanna.jpg')}/>
 </TouchableOpacity>
-<TouchableOpacity  onPress={()=> navigation.navigate("Modal")}  >
+<TouchableOpacity style={styles.iconContainer2} onPress={()=> navigation.navigate("Modal", { onAddProfile: addProfile})}  >
   <Image style={styles.logoImg} source={require('../assets/tinder-logo.png')}/>
 </TouchableOpacity>
 
-<TouchableOpacity onPress={() => navigation.navigate("Chat")} >
-  <Ionicons name='chatbubbles-sharp' size={30} color="#FF5864" style={styles.chatIcon}/>
+<TouchableOpacity style={styles.iconContainer2} onPress={() => navigation.navigate("Chat")} >
+  <Ionicons name='chatbubbles-sharp' size={32} color="#FF5864" />
 </TouchableOpacity>
 </View>
 
@@ -60,8 +73,8 @@ useLayoutEffect(() => {
 <Swiper
 ref={swipeRef}
 containerStyle={{backgroundColor: "transparent"}}
-cards={RANDOM_DATA} 
-stackSize={4}
+cards={profiles} 
+stackSize={10}
 cardIndex={0}
 verticalSwipe={false}
 onSwipedLeft={() => {
@@ -130,7 +143,7 @@ renderCard={(card) => card ? (
 
 </View>
 
-<View style={{ flexDirection: 'row', justifyContent: 'space-evenly', bottom: 20 }}>
+<View style={{ flexDirection: 'row', justifyContent: 'space-evenly'}}>
   <TouchableOpacity style={styles.iconContainer}>
     <FontAwesome name='undo' size={30} color={"#FEBE10"} />
   </TouchableOpacity>
@@ -153,7 +166,6 @@ renderCard={(card) => card ? (
     <Ionicons name='flash' size={30} color={'#800080'} />
   </TouchableOpacity>
 </View>
-
     </SafeAreaView>
   )
 }
@@ -174,20 +186,23 @@ const styles = StyleSheet.create({
   topView: {
     flexDirection: 'row', 
     justifyContent: 'space-between', 
-    marginTop: 24, 
-    padding: 8
+  
   },
   swipeView: {
-     flex: 1, bottom: 30,
+     flex: 1,
+     bottom: 20
      
   },
   cardView: {
-    backgroundColor: "white",
-    flex: 5/6,
+    backgroundColor: "black",
+    flex: 3/4,
     borderRadius: 8,
     overflow: 'hidden', 
     position: 'relative',
     elevation: 2,
+    shadowColor: 'black',
+    shadowRadius: 2,
+    shadowOpacity: 0.2,
   },
   cardImg: {
     flex: 1, // Take up full available space
@@ -195,6 +210,7 @@ const styles = StyleSheet.create({
     
   },
   iconContainer: {
+    bottom: 20,
     backgroundColor: 'white',
     borderRadius: 60/2,
     justifyContent: 'center', // Center the icon vertically
@@ -204,7 +220,7 @@ const styles = StyleSheet.create({
   },
   textOverlay: {
     position: 'absolute', 
-    bottom: 10, 
+    bottom: 0, 
     left: 10, 
     right: 10, 
     padding: 4, 
@@ -215,12 +231,21 @@ const styles = StyleSheet.create({
   },
   cardView2: {
     backgroundColor: "white",
-    flex: 5/6,
+    flex: 3/4,
     borderRadius: 8,
-  
-elevation: 2,
+    position: 'relative',
 alignItems: 'center',
 justifyContent: 'center'
+  },
+  iconContainer2: {
+    borderRadius: 60/2,
+    justifyContent: 'center', // Center the icon vertically
+    alignItems: 'center', // Center the icon horizontally
+    width: 60, // Set a fixed width
+    height: 60, // Set a fixed height
+    margin: 4,marginHorizontal: 10,
+backgroundColor: 'white',
+top: 10
   },
   
 })

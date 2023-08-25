@@ -40,15 +40,17 @@ flex: 1,
 imgBackground: {
   resizeMode: 'cover',
   flex: 1,
-  alignItems: 'center',
-  justifyContent: 'center'
+  
   
 },
 touchableText:{
   padding: 12,
   backgroundColor: 'white',
   borderRadius: 12,
-  alignSelf: 'center', 
-  marginTop: '85%', 
+  alignSelf: 'center',
+  position: 'absolute',
+  bottom: 160
+
+
 }
 })
